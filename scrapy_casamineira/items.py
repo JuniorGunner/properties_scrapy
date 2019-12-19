@@ -6,9 +6,13 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-
+# from scrapy.loader.processors import MapCompose, TakeFirst
+# from w3lib.html import remove_tags
 
 class ScrapyCasamineiraItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
     pass
+    # neighborhood = scrapy.Field()
+    # city = scrapy.Field()
+    # state = scrapy.Field()
+    # area_usable = scrapy.Field()
+    # price_sale = scrapy.Field()

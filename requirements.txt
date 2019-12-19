@@ -1,0 +1,7 @@
+scrapy==1.5
+jmespath==0.9.3
+dateparser==0.7.0
+fake-useragent==0.1.10
+psycopg2==2.7.5
+shub
+bs4
