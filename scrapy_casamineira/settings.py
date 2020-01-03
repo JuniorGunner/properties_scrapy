@@ -16,18 +16,24 @@ NEWSPIDER_MODULE = 'scrapy_casamineira.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'scrapy_casamineira (+http://www.yourdomain.com)'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
-
+# Log Messages
+LOG_LEVEL='INFO'
+FEED_EXPORT_ENCODING='utf-8'
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 1
+ITEM_PIPELINES = {
+   'scrapy_casamineira.pipelines.ScrapyCasamineiraPipeline': 300,
+   # 'myproject.pipelines.JsonWriterPipeline': 800 #another pipline
+}
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16

@@ -10,9 +10,16 @@ import scrapy
 # from w3lib.html import remove_tags
 
 class ScrapyCasamineiraItem(scrapy.Item):
-    pass
-    # neighborhood = scrapy.Field()
-    # city = scrapy.Field()
-    # state = scrapy.Field()
-    # area_usable = scrapy.Field()
-    # price_sale = scrapy.Field()
+    id = scrapy.Field()
+    neighborhood = scrapy.Field()
+    city = scrapy.Field()
+    state = scrapy.Field()
+    type = scrapy.Field()
+    area_usable = scrapy.Field()
+    n_bedroom = scrapy.Field()
+    n_bathroom = scrapy.Field()
+    n_suite = scrapy.Field()
+    n_parking = scrapy.Field()
+    price_sale = scrapy.Field()
+    lat = scrapy.Field()
+    lon = scrapy.Field()

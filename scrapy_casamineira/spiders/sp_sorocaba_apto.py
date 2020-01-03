@@ -2,9 +2,10 @@ import scrapy
 from scrapy import Request
 import bs4
 from bs4 import BeautifulSoup as bs
+import requests
 
 class SorocabaSpider(scrapy.Spider):
-    name = 'sorocaba_sp'
+    name = 'sp_sorocaba_apto'
 
     start_urls = [
         'https://www.casamineira.com.br/venda/apartamento/sorocaba_sp' # ?pagina=1
@@ -19,14 +20,22 @@ class SorocabaSpider(scrapy.Spider):
         anuncios = soup.find('div', {'class': 'property-listing'}).findAll('div', class_ = 'property-item')
 
         for item in anuncios:
+            id = item.find('div', {'class': 'property-code'}).getText().strip().split()[1]
+
             end = item.find('a', {'class': 'property-location'}).getText().strip().split(',')
             bairro = end[0]
             cidade, uf = end[1].split('-')
             cidade, uf = cidade.strip(), uf.strip()
 
+            # TODO: implement get_lat_lon()
+            lat, lon = None, None
+
             # Informações: área, quartos, banheiros, suítes, vagas, preço
             area, quartos, banheiros, suites, vagas = 0, 0, 0, 0, 0
             info = item.find('ul').getText().split()
+
+            #Tipo
+            tipo = 'APARTMENT'
 
             #Área
             if('m²' in info):
@@ -60,18 +69,19 @@ class SorocabaSpider(scrapy.Spider):
             preco = int(item.find('span', {'class': 'preco'}).getText().split()[1].replace('.', ''))
 
             yield {
+                'id': id,
                 'neighborhood': bairro,
                 'city': cidade,
                 'state': uf,
+                'type': tipo,
                 'area_usable': area,
-                'n_bedrooom': quartos,
+                'n_bedroom': quartos,
                 'n_bathroom': banheiros,
                 'n_suite': suites,
                 'n_parking': vagas,
-                # 'lat': item.xpath("").extract_first(),
-                # 'lon': item.xpath("").extract_first(),
                 'price_sale': preco,
-                # 'fee_condo': item.xpath("").extract_first()
+                'lat': lat,
+                'lon': lon,
             }
 
         next_urls = response.xpath("//ul[@class='pagination']/li/a/@href").extract()
