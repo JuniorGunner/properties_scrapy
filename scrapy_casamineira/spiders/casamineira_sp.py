@@ -5,10 +5,21 @@ from bs4 import BeautifulSoup as bs
 import requests
 
 class SorocabaSpider(scrapy.Spider):
-    name = 'sp_sorocaba_apto'
+    name = 'casamineira_sp'
 
     start_urls = [
-        'https://www.casamineira.com.br/venda/apartamento/sorocaba_sp' # ?pagina=1
+        'https://www.casamineira.com.br/venda/apartamento/sorocaba_sp',
+        'https://www.casamineira.com.br/venda/casa/sorocaba_sp',
+        'https://www.casamineira.com.br/venda/lote/sorocaba_sp',
+        'https://www.casamineira.com.br/venda/apartamento/sao-paulo_sp',
+        'https://www.casamineira.com.br/venda/casa/sao-paulo_sp',
+        'https://www.casamineira.com.br/venda/lote/sao-paulo_sp'
+        'https://www.casamineira.com.br/venda/apartamento/barueri_sp',
+        'https://www.casamineira.com.br/venda/casa/barueri_sp',
+        'https://www.casamineira.com.br/venda/lote/barueri_sp',
+        'https://www.casamineira.com.br/venda/apartamento/alphaville-industrial_barueri_sp',
+        'https://www.casamineira.com.br/venda/casa/alphaville-industrial_barueri_sp',
+        'https://www.casamineira.com.br/venda/lote/alphaville-industrial_barueri_sp',
     ]
 
     def parse(self, response):
@@ -18,6 +29,19 @@ class SorocabaSpider(scrapy.Spider):
 
         # Anúncios
         anuncios = soup.find('div', {'class': 'property-listing'}).findAll('div', class_ = 'property-item')
+
+        # Tipo de Imóvel
+        tipo = ''
+        type_filter = soup.find('span', {'id': 'filtro-preco-minimo-topo'}).find_previous_sibling('span').getText().strip()
+
+        if (type_filter == 'Apartamento'):
+            tipo = 'APARTMENT'
+        elif (type_filter == 'Casa'):
+            tipo = 'HOME'
+        elif (type_filter == 'Lote'):
+            tipo = 'RESIDENTIAL_ALLOTMENT_LAND'
+
+        # print('\n', tipo, type_filter, '\n')
 
         for item in anuncios:
             id = item.find('div', {'class': 'property-code'}).getText().strip().split()[1]
@@ -34,12 +58,9 @@ class SorocabaSpider(scrapy.Spider):
             area, quartos, banheiros, suites, vagas = 0, 0, 0, 0, 0
             info = item.find('ul').getText().split()
 
-            #Tipo
-            tipo = 'APARTMENT'
-
             #Área
             if('m²' in info):
-                area = int(info[info.index('m²')-1])
+                area = int(float(info[info.index('m²')-1]))
 
             # Quarto
             if('quarto' in info):
