@@ -13,7 +13,7 @@ class SaoPauloSpider(scrapy.Spider):
         'https://www.casamineira.com.br/venda/lote/sorocaba_sp',
         'https://www.casamineira.com.br/venda/apartamento/sao-paulo_sp',
         'https://www.casamineira.com.br/venda/casa/sao-paulo_sp',
-        'https://www.casamineira.com.br/venda/lote/sao-paulo_sp'
+        'https://www.casamineira.com.br/venda/lote/sao-paulo_sp',
         'https://www.casamineira.com.br/venda/apartamento/barueri_sp',
         'https://www.casamineira.com.br/venda/casa/barueri_sp',
         'https://www.casamineira.com.br/venda/lote/barueri_sp',
