@@ -193,7 +193,12 @@ class ScrapyCasamineiraPipeline(object):
                 self.cur = self.connection.cursor()
             except:
                 self.connection.close()
-                self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
+                self.connection = psycopg2.connect(
+                    host='avaliei-dev.cftkhaxsfvvo.sa-east-1.rds.amazonaws.com',
+                    user='avaliei',
+                    password='AvalieiDev123',
+                    dbname='avaliei_dev'
+                )
 
             self.cur = self.connection.cursor()
 
