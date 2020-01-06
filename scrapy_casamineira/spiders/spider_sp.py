@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 
 class SorocabaSpider(scrapy.Spider):
-    name = 'casamineira_sp'
+    name = 'spider_sp'
 
     start_urls = [
         'https://www.casamineira.com.br/venda/apartamento/sorocaba_sp',
