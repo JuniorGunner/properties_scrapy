@@ -1,4 +1,4 @@
-# Scrapy Project
+# Scrapy + BeautifulSoup Project
 
 Scrapy project develop to collect and store property sales value and other relevant informations about the property itself.
 
