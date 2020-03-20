@@ -6,13 +6,17 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import psycopg2
+from configparser import RawConfigParser
+
+config = RawConfigParser()
+config.read('prod.ini')
 
 class ScrapyCasamineiraPipeline(object):
     def open_spider(self, spider):
-        hostname = 'avaliei-dev.cftkhaxsfvvo.sa-east-1.rds.amazonaws.com' # Dev Database
-        username = 'avaliei'
-        password = 'AvalieiDev123'
-        database = 'avaliei_dev'
+        hostname = config['database']['DATABASE_HOST']
+        username = config['database']['DATABASE_USER']
+        password = config['database']['DATABASE_PWD']
+        database = config['database']['DATABASE_NAME']
         self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
         self.cur = self.connection.cursor()
 
@@ -194,10 +198,10 @@ class ScrapyCasamineiraPipeline(object):
             except:
                 self.connection.close()
                 self.connection = psycopg2.connect(
-                    host='avaliei-dev.cftkhaxsfvvo.sa-east-1.rds.amazonaws.com',
-                    user='avaliei',
-                    password='AvalieiDev123',
-                    dbname='avaliei_dev'
+                    host = config['database']['DATABASE_HOST'],
+                    user = config['database']['DATABASE_USER'],
+                    password = config['database']['DATABASE_PWD'],
+                    dbname = config['database']['DATABASE_NAME']
                 )
 
             self.cur = self.connection.cursor()
