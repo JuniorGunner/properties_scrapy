@@ -24,7 +24,7 @@ This project was developed in [Python 3.x](https://www.python.org/) with:
 
 3. Run spider:
   ```
-  scrapy crawl myspider
+  $ scrapy crawl myspider
   ```
 
 #### License
