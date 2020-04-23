@@ -23,14 +23,14 @@ class SaoPauloSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        # Lê html
+        # Reads html
         html = response.body
         soup = bs(html, 'html.parser')
 
-        # Anúncios
+        # Advertisements
         anuncios = soup.find('div', {'class': 'property-listing'}).findAll('div', class_ = 'property-item')
 
-        # Tipo de Imóvel
+        # Property type
         tipo = ''
         type_filter = soup.find('span', {'id': 'filtro-preco-minimo-topo'}).find_previous_sibling('span').getText().strip()
 
@@ -54,39 +54,39 @@ class SaoPauloSpider(scrapy.Spider):
             # TODO: implement get_lat_lon()
             lat, lon = None, None
 
-            # Informações: área, quartos, banheiros, suítes, vagas, preço
+            # Informations: area, rooms, bathrooms, suites, parking, value
             area, quartos, banheiros, suites, vagas = 0, 0, 0, 0, 0
             info = item.find('ul').getText().split()
 
-            #Área
+            # Area
             if('m²' in info):
                 area = int(float(info[info.index('m²')-1]))
 
-            # Quarto
+            # Rooms
             if('quarto' in info):
                 quartos = int(info[info.index('quarto')-1])
             elif('quartos' in info):
                 quartos = int(info[info.index('quartos')-1])
 
-            # Banheiro
+            # Bathrooms
             if('banheiro' in info):
                 banheiros = int(info[info.index('banheiro')-1])
             elif('banheiros' in info):
                 banheiros = int(info[info.index('banheiros')-1])
 
-            # Suítes
+            # Suites
             if('suíte' in info):
                 suites = int(info[info.index('suíte')-1])
             elif('suítes' in info):
                 suites = int(info[info.index('suítes')-1])
 
-            # Vagas
+            # Parking
             if('vaga' in info):
                 vagas = int(info[info.index('vaga')-1])
             elif('vagas' in info):
                 vagas = int(info[info.index('vagas')-1])
 
-            # Preço
+            # Value
             preco = int(item.find('span', {'class': 'preco'}).getText().split()[1].replace('.', ''))
 
             yield {
@@ -105,6 +105,7 @@ class SaoPauloSpider(scrapy.Spider):
                 'lon': lon,
             }
 
+        # Go to next page
         next_urls = response.xpath("//ul[@class='pagination']/li/a/@href").extract()
         for url in next_urls:
             yield Request(response.urljoin(url), callback = self.parse)
