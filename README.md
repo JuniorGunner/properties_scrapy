@@ -19,7 +19,7 @@ This project was developed in [Python 3.x](https://www.python.org/) with:
 
 2. Install dependencies:
   ```
-  $ pip install requirements.txt
+  $ pip install -r requirements.txt
   ```
 
 3. Run spider:
