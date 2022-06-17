@@ -1,4 +1,4 @@
-scrapy==1.5
+scrapy==2.6.1
 jmespath==0.9.3
 dateparser==0.7.0
 fake-useragent==0.1.10
